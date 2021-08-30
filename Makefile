@@ -6,7 +6,7 @@
 #    By: julian <julian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/11 12:13:12 by jludt             #+#    #+#              #
-#    Updated: 2021/08/18 08:30:22 by julian           ###   ########.fr        #
+#    Updated: 2021/08/30 17:24:01 by julian           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ LIBFTPATH = ./libft/libft.a
 
 CFLAGS = -Wall -Werror -Wextra $(LIBFTPATH)
 
-CFILES =	pipex.c 
+CFILES =	pipex.c \
+			utils/exit.c \
+			utils/manage_error.c \
+			utils/get_path.c \
+			utils/processes.c
 
 OBJECTS = $(CFILES:.c=.o)
 

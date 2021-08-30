@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 16:09:43 by jludt             #+#    #+#             */
-/*   Updated: 2021/08/30 12:38:18 by julian           ###   ########.fr       */
+/*   Updated: 2021/08/30 12:40:26 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** The new string. NULL if the allocation fails.
 */
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_free(char const *s1, char const *s2)
 {
 	char	*s_join;
 	int		len_s1;
@@ -47,5 +47,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[j] != '\0')
 		s_join[i++] = s2[j++];
 	s_join[i] = '\0';
+	free((char *)s1);
 	return (s_join);
 }
