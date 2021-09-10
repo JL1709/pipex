@@ -3,21 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:03:34 by julian            #+#    #+#             */
-/*   Updated: 2021/08/30 15:08:47 by julian           ###   ########.fr       */
+/*   Updated: 2021/09/06 13:27:13 by jludt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+static int	ft_strncmp(char *s1, char *s2, unsigned int n)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		if (s1[i] == '\0' && s2[i] == '\0')
+			return (0);
+		i++;
+	}
+	return (0);
+}
 
 char	**get_path(char *envp[])
 {
 	int		i;
 	char	**path;
 
-	path = ft_split(envp[4], ':');
+	i = -1;
+	while (envp[++i] != NULL)
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			break ;
+	path = ft_split(envp[i], ':');
 	path[0] = ft_strtrim(path[0], "PATH=");
 	i = -1;
 	while (path[++i] != NULL)

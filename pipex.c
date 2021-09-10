@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 08:40:19 by julian            #+#    #+#             */
-/*   Updated: 2021/08/30 18:56:16 by julian           ###   ########.fr       */
+/*   Updated: 2021/09/09 13:10:12 by jludt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 static void	pipex(int f1, int f2, char *argv[], char *envp[])
 {
 	int		fd[2];
-	pid_t	parent;
+	pid_t	id;
 
 	pipe(fd);
-	parent = fork();
-	if (parent < 0)
+	id = fork();
+	if (id < 0)
 		return (perror("FORK: "));
-	if (parent == 0)
+	if (id == 0)
 		child_process(f1, fd, argv, envp);
 	else
 		parent_process(f2, fd, argv, envp);
@@ -39,7 +39,7 @@ static void	pipex(int f1, int f2, char *argv[], char *envp[])
 ** and Read Only for everyone else
 */
 
-int		main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	int	f1;
 	int	f2;

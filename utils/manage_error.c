@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:48:28 by julian            #+#    #+#             */
-/*   Updated: 2021/08/30 18:48:21 by julian           ###   ########.fr       */
+/*   Updated: 2021/09/06 14:04:12 by jludt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	pr_error(char *s1, char *s2)
 	if (s2)
 		ft_putstr_fd(s2, 2);
 	write(2, "\n", 1);
-	return(0);
+	return (0);
 }
 
 static int	print_error_cmd(char *src)
@@ -44,7 +44,7 @@ static int	print_error_cmd(char *src)
 	return (0);
 }
 
-int	check_command (char *argv[], char *envp[], int position)
+int	check_command(char *argv[], char *envp[], int position)
 {
 	int		i;
 	char	*cmd;
@@ -58,11 +58,11 @@ int	check_command (char *argv[], char *envp[], int position)
 	{
 		cmd = ft_strjoin(path[i], command[0]);
 		if (cmd == NULL)
-			break;
+			break ;
 		if (access(cmd, X_OK) != -1)
 		{
 			free(cmd);
-			return(1);
+			return (1);
 		}
 		free(cmd);
 	}

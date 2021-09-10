@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_2children.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 08:40:19 by julian            #+#    #+#             */
-/*   Updated: 2021/08/19 16:30:43 by julian           ###   ########.fr       */
+/*   Updated: 2021/09/06 14:03:35 by jludt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	get_data(t_pipex *data, char *argv[], char *envp[])
 {
-	int i;
-	
+	int	i;
+
 	data->paths = ft_split(envp[4], ':');
 	data->paths[0] = ft_strtrim(data->paths[0], "PATH=");
 	i = -1;
@@ -23,7 +23,6 @@ static void	get_data(t_pipex *data, char *argv[], char *envp[])
 		data->paths[i] = ft_strjoin(data->paths[i], "/");
 	data->cmd1 = ft_split(argv[2], ' ');
 	data->cmd2 = ft_split(argv[3], ' ');
-	
 }
 
 /*
@@ -39,8 +38,8 @@ static void	child1(t_pipex *data, char *envp[])
 	int		i;
 	char	*cmd;
 
-	dup2(data->f1, STDIN_FILENO); 
-	dup2(data->fd[1], STDOUT_FILENO); 
+	dup2(data->f1, STDIN_FILENO);
+	dup2(data->fd[1], STDOUT_FILENO);
 	close(data->fd[0]);
 	close(data->f1);
 	i = -1;
@@ -81,8 +80,8 @@ static void	child2(t_pipex *data, char *envp[])
 
 static void	pipex(t_pipex *data, char *envp[])
 {
-	int status;
-	
+	int	status;
+
 	status = 0;
 	pipe(data->fd);
 	data->child1 = fork();
@@ -106,7 +105,7 @@ static void	pipex(t_pipex *data, char *envp[])
 ** and Read Only for everyone else
 */
 
-int			main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	*data;
 

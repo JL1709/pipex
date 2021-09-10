@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:03:52 by julian            #+#    #+#             */
-/*   Updated: 2021/08/30 15:08:57 by julian           ###   ########.fr       */
+/*   Updated: 2021/09/06 14:04:33 by jludt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	parent_process(int f2, int *fd, char *argv[], char *envp[])
 	char	**cmd2;
 
 	status = 0;
-	waitpid(-1, &status, 0);	
+	waitpid(-1, &status, 0);
 	if (dup2(f2, STDOUT_FILENO) < 0 || dup2(fd[0], STDIN_FILENO) < 0)
-		return(perror("PARENT_PROCESS: "));
+		return (perror("PARENT_PROCESS: "));
 	close(fd[1]);
 	close(f2);
 	path = get_path(envp);
