@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   manage_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
+/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:48:28 by julian            #+#    #+#             */
-/*   Updated: 2021/09/06 14:04:12 by jludt            ###   ########.fr       */
+/*   Updated: 2021/09/12 13:34:27 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../includes/pipex.h"
 
 /*
 ** access, faccessat -- check accessibility of a file

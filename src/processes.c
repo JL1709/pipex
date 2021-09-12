@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
+/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:03:52 by julian            #+#    #+#             */
-/*   Updated: 2021/09/06 14:04:33 by jludt            ###   ########.fr       */
+/*   Updated: 2021/09/12 13:34:42 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../includes/pipex.h"
 
 /*
+** env - set environment and execute command, or print environmenqt
 ** "env" in terminal -> PATH=... (shows each possible path)
-** dub2() - duplicate file descriptor
+** dub2("fd to copy", "(value of) new fd") - duplicate file descriptor
 **	->	to use our files as stdin and stdout
 ** always close fd you don't use
 ** execve() - execute programm / file
-** execve() transforms the calling process into a new process.
+** execve() overlays the current process image  with a new process image
+** -> the successful call has no process to return to
 */
 
 void	child_process(int f1, int *fd, char *argv[], char *envp[])
@@ -40,12 +42,18 @@ void	child_process(int f1, int *fd, char *argv[], char *envp[])
 		cmd = ft_strjoin(path[i], cmd1[0]);
 		if (cmd == NULL)
 			return ;
-		if (execve(cmd, cmd1, envp) != -1)
-			exit_success(path, cmd1, cmd);
+		execve(cmd, cmd1, envp);
 		free(cmd);
 	}
 	exit_failure(path, cmd1);
 }
+
+/*
+** waitpid(-1, &status, 0) == wait(&status)
+** The waitpid() system call suspends execution of the calling process 
+** until a child specified by pid argument has changed state.
+** -1 --> meaning wait for any child process
+*/
 
 void	parent_process(int f2, int *fd, char *argv[], char *envp[])
 {
@@ -69,8 +77,7 @@ void	parent_process(int f2, int *fd, char *argv[], char *envp[])
 		cmd = ft_strjoin(path[i], cmd2[0]);
 		if (cmd == NULL)
 			return ;
-		if (execve(cmd, cmd2, envp) != -1)
-			exit_success(path, cmd2, cmd);
+		execve(cmd, cmd2, envp);
 		free(cmd);
 	}
 	exit_failure(path, cmd2);

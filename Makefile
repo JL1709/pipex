@@ -6,37 +6,78 @@
 #    By: julian <julian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/11 12:13:12 by jludt             #+#    #+#              #
-#    Updated: 2021/08/30 17:24:01 by julian           ###   ########.fr        #
+#    Updated: 2021/09/12 13:47:14 by julian           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Name of the program
 NAME = pipex
 
-CC = gcc
+# Color codes
 
-LIBFTPATH = ./libft/libft.a
+RESET	= \033[0m
+GREEN	= \033[32m
+YELLOW	= \033[33m
+BLUE	= \033[34m
 
-CFLAGS = -Wall -Werror -Wextra $(LIBFTPATH)
+# Compiling flags
+FLAGS = -Wall -Wextra -Werror
 
-CFILES =	pipex.c \
-			utils/exit.c \
-			utils/manage_error.c \
-			utils/get_path.c \
-			utils/processes.c
+# Folders
+SRC_DIR = ./src/
+OBJ_DIR = ./obj/
+INC_DIR = ./includes/
+LIBFT_DIR = ./libft/
 
-OBJECTS = $(CFILES:.c=.o)
+# Source files and object files
+SRC_FILES = exit.c					\
+			get_path.c				\
+			main.c					\
+			manage_error.c			\
+			pipe_fork.c				\
+			processes.c
+OBJ_FILES = $(SRC_FILES:.c=.o)
 
-$(NAME):
-	make --directory=./libft
-	$(CC) $(CFILES) $(CFLAGS) -o $(NAME)
+# Paths
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
+LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
 
-clean: 
-	rm -f $(OBJECTS)
-	make clean --directory=./libft
+# Libft linkers
+LNK  = -L $(LIBFT_DIR) -lft
 
-fclean:
-	rm -f $(NAME) $(OBJECTS)
-	make fclean --directory=./libft
+# all rule
+all: obj $(LIBFT) $(NAME)
 
-re: fclean $(NAME)
-	make re --directory=./libft
+obj:
+	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)%.o:$(SRC_DIR)%.c
+	@gcc $(FLAGS) -I $(LIBFT_DIR) -I $(INC_DIR) -o $@ -c $<
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
+# Compiling
+$(NAME): $(OBJ)
+	@echo "$(YELLOW)\n      -> Building $(BLUE)$(NAME) $(YELLOW)...$(RESET)"
+	@gcc $(OBJ) $(LNK) -lm -o $(NAME)
+	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
+
+# clean rule
+clean:
+	@echo "$(GREEN)***   Deleting all objects from $(NAME)   ...   ***$(RESET)"
+	@rm -Rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
+	@echo
+
+# fclean rule
+fclean: clean
+	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***$(RESET)"
+	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	@echo
+
+# re rule
+re: fclean all
+
+# phony
+.PHONY: all clean fclean re
