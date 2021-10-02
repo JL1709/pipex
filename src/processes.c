@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jludt <jludt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:03:52 by julian            #+#    #+#             */
-/*   Updated: 2021/09/12 13:34:42 by julian           ###   ########.fr       */
+/*   Updated: 2021/10/02 16:01:25 by jludt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,44 @@
 ** -> the successful call has no process to return to
 */
 
-void	child_process(int f1, int *fd, char *argv[], char *envp[])
+void	child_process(int f1, int f2, int fd[][2], char *argv[], char *envp[], int j, int max_it)
 {
 	int		i;
 	char	*cmd;
 	char	**path;
 	char	**cmd1;
 
-	if (dup2(f1, STDIN_FILENO) < 0 || dup2(fd[1], STDOUT_FILENO) < 0)
-		return (perror("CHILD_PROCESS: "));
-	close(fd[0]);
-	close(f1);
+	fprintf(stderr, "j = %d\n", j);
+	if (j == 0)
+	{
+		fprintf(stderr, "j == 0\n");
+		if (dup2(f1, STDIN_FILENO) < 0 || dup2(fd[0][1], STDOUT_FILENO) < 0)
+			return (perror("CHILD_PROCESS: "));
+		close(f1);
+		close(fd[0][0]);
+	}
+	else if (j == max_it)
+	{
+		fprintf(stderr, "j == max_it\n");
+		if (dup2(fd[1][0], STDIN_FILENO) < 0 || dup2(f2, STDOUT_FILENO) < 0)
+			return (perror("CHILD_PROCESS: "));
+		close(fd[1][1]);
+		close(fd[0][1]);
+		close(fd[0][0]);
+		close(f2);
+	}
+	else
+	{
+		fprintf(stderr, "j == in between\n");
+		if (dup2(fd[j - 1][0], STDIN_FILENO) < 0 || dup2(fd[j][1], STDOUT_FILENO) < 0)
+		//if (dup2(fd[0][0], STDIN_FILENO) < 0)
+			return (perror("CHILD_PROCESS: "));
+		close(fd[0][1]);
+		close(fd[1][0]);
+		close(fd[1][1]);
+	}
 	path = get_path(envp);
-	cmd1 = ft_split(argv[2], ' ');
+	cmd1 = ft_split(argv[j + 2], ' ');
 	i = -1;
 	while (path[++i] != NULL)
 	{
@@ -46,39 +71,4 @@ void	child_process(int f1, int *fd, char *argv[], char *envp[])
 		free(cmd);
 	}
 	exit_failure(path, cmd1);
-}
-
-/*
-** waitpid(-1, &status, 0) == wait(&status)
-** The waitpid() system call suspends execution of the calling process 
-** until a child specified by pid argument has changed state.
-** -1 --> meaning wait for any child process
-*/
-
-void	parent_process(int f2, int *fd, char *argv[], char *envp[])
-{
-	int		status;
-	int		i;
-	char	*cmd;
-	char	**path;
-	char	**cmd2;
-
-	status = 0;
-	waitpid(-1, &status, 0);
-	if (dup2(f2, STDOUT_FILENO) < 0 || dup2(fd[0], STDIN_FILENO) < 0)
-		return (perror("PARENT_PROCESS: "));
-	close(fd[1]);
-	close(f2);
-	path = get_path(envp);
-	cmd2 = ft_split(argv[3], ' ');
-	i = -1;
-	while (path[++i] != NULL)
-	{
-		cmd = ft_strjoin(path[i], cmd2[0]);
-		if (cmd == NULL)
-			return ;
-		execve(cmd, cmd2, envp);
-		free(cmd);
-	}
-	exit_failure(path, cmd2);
 }
