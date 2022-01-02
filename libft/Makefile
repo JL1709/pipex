@@ -6,7 +6,7 @@
 #    By: julian <julian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 09:51:20 by jludt             #+#    #+#              #
-#    Updated: 2021/08/30 15:16:13 by julian           ###   ########.fr        #
+#    Updated: 2022/01/02 14:26:15 by julian           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ MANDATORY = ft_putstr_fd.c \
 all: $(NAME)
 
 $(NAME):
-	gcc -c -Wall -Wextra -Werror *.c
-	ar cr $(NAME) *.o
+	@gcc -c -Wall -Wextra -Werror *.c
+	@ar cr $(NAME) *.o
 
 clean:
-	rm -f *.o
+	@rm -f *.o
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re : fclean all
 
