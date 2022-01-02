@@ -38,7 +38,7 @@ $> ./pipex infile command1 command2 command3 ... commandn outfile
 ```
 Works like the shell command: < infile command1 | command2 | command3 | ... | commandn > outfile
 
-#### 2) Here document (<<) and Append operator(>>)
+#### 2) Here document (<<) and Append operator (>>)
 ```
 $> ./pipex here_doc LIMITER command1 command2 file
 ```
