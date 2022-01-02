@@ -27,5 +27,19 @@ For example:
 ```
 $> ./pipex infile cat wc outfile
 ```
-
 infile provided for testing (outfile gets created automatically during execution).
+
+#### pipex_bonus folder
+Provides a pipex program that can handle:
+
+##### 1) Multiple pipes
+```
+$> ./pipex infile command1 command2 command3 ... commandn outfile
+```
+Works like the shell command: < infile command1 | command2 | command3 | ... | commandn > outfile
+
+##### 2) Here document (<<) and append (>>)
+```
+$> ./pipex here_doc LIMITER command1 command2 file
+```
+Works like the shell command: command1 << LIMITER | command2 >> outfile
