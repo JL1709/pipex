@@ -29,7 +29,7 @@ $> ./pipex infile cat wc outfile
 ```
 infile provided for testing (outfile gets created automatically during execution).
 
-#### pipex_bonus folder
+### pipex_bonus folder
 Provides a pipex program that can handle:
 
 ##### 1) Multiple pipes
