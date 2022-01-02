@@ -10,7 +10,13 @@ Tested on macOS Monterey.
 git clone git@github.com:JL1709/pipex.git
 ```
 
-#### 2)  Run program
+#### 2) Run Makfile
+```
+cd pipex
+make
+```
+
+#### 3)  Run program
 Include header file to your code
 ```
 #include "pathToGetNextLineFolder/get_next_line.h"
