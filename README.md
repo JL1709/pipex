@@ -44,6 +44,6 @@ $> ./pipex here_doc LIMITER command1 command2 file
 ```
 For example:
 ```
-./pipex here_doc end cat wc outfile
+./pipex here_doc EOF cat wc outfile
 ```
 Works like the shell command: command1 << LIMITER | command2 >> outfile
