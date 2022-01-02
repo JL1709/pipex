@@ -7,7 +7,7 @@ Tested on macOS Monterey.
 
 #### 1) Clone this repository 
 ```
-git clone git@github.com:JL1709/get_next_line.git
+git clone git@github.com:JL1709/pipex.git
 ```
 
 #### 2)  Run program
