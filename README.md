@@ -18,17 +18,14 @@ make
 
 #### 3)  Run program
 ```
-$> ./pipex file1 cmd1 cmd2 file2
+$> ./pipex infile command1 command2 outfile
 ```
-file1 and file2 are file names, cmd1 and cmd2 are shell commands with their parameters.  
-Works like the shell command: < file1 cmd1 | cmd2 > file2
+infile and outfile are file names, command1 and command2 are shell commands with their parameters.  
+Works like the shell command: < infile command1 | command2 > outfile
   
 For example:
 ```
-$> ./pipex file1 cat wc file2
+$> ./pipex infile cat wc outfile
 ```
 
-Compile with get_next_line_bonus.c and get_next_line_utils_bonus.c and include get_next_line_bonus.h to be able to manage multiple file descriptors.  
-For example, if the file descriptors 3, 4 and 5 are accessible for reading, then you can
-call get_next_line once on 3, once on 4, once again on 3 then once on 5 etc. without losing the reading thread on each of the descriptors.  
-demo.c and demo.txt provided for testing.
+infile provided for testing (outfile gets created automatically during execution).
